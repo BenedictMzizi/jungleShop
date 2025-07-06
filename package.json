@@ -1,0 +1,9 @@
+{
+  "name": "jungleShop",
+  "scripts": {
+    "dev": "concurrently \"npm run start --prefix frontend\" \"npm run start --prefix backend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.1"
+  }
+}

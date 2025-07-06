@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  backend:
+    container_name: jungleshop-backend
+    build: ./backend
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - DB_URI=mysql://root:root@db:3306/jungleshop
+      - JWT_SECRET=your_jwt_secret
+      - STRIPE_KEY=your_stripe_key
+      - AWS_KEY=your_aws_key
+      - AWS_SECRET=your_aws_secret
+      - AWS_REGION=your_region
+      - AWS_S3_BUCKET=your_s3_bucket
+    depends_on:
+      - db
+
+  frontend:
+    container_name: jungleshop-frontend
+    build: ./frontend/client
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_URL=http://localhost:4000
+
+  db:
+    container_name: jungleshop-db
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=jungleshop
+    volumes:
+      - jungleshop_db_data:/var/lib/mysql
+
+volumes:
+  jungleshop_db_data:

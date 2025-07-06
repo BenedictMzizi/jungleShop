@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: yourdockerhub/backend:latest # Replace with your image
+          ports:
+            - containerPort: 3000
+          env:
+            - name: STRIPE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jungle-secrets
+                  key: STRIPE_KEY
+            - name: DB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: jungle-secrets
+                  key: DB_URI
+            - name: AWS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jungle-secrets
+                  key: AWS_KEY
+            - name: AWS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jungle-secrets
+                  key: AWS_SECRET
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: jungle-secrets
+                  key: AWS_REGION
+            - name: AWS_S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: jungle-secrets
+                  key: AWS_S3_BUCKET
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jungle-secrets
+                  key: JWT_SECRET

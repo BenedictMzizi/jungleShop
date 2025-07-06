@@ -1,0 +1,160 @@
+# === Node.js ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# === React ===
+frontend/client/build/
+frontend/client/.env
+
+# === Environment Variables ===
+.env
+*.env.local
+*.env.development
+*.env.production
+
+# === Terraform ===
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+terraform.tfvars.json
+crash.log
+
+# === Docker ===
+Dockerfile
+docker-compose.override.yml
+*.log
+
+# === OS / IDEs ===
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# === AWS Keys or Secrets ===
+**/credentials
+**/secrets.json
+*.pem
+# === Node.js ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# === React ===
+frontend/client/build/
+frontend/client/.env
+
+# === Environment Variables ===
+.env
+*.env.local
+*.env.development
+*.env.production
+
+# === Terraform ===
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+terraform.tfvars.json
+crash.log
+
+# === Docker ===
+Dockerfile
+docker-compose.override.yml
+*.log
+
+# === OS / IDEs ===
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# === AWS Keys or Secrets ===
+**/credentials
+**/secrets.json
+*.pem
+# === Node.js ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# === React ===
+frontend/client/build/
+frontend/client/.env
+
+# === Environment Variables ===
+.env
+*.env.local
+*.env.development
+*.env.production
+
+# === Terraform ===
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+terraform.tfvars.json
+crash.log
+
+# === Docker ===
+Dockerfile
+docker-compose.override.yml
+*.log
+
+# === OS / IDEs ===
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# === AWS Keys or Secrets ===
+**/credentials
+**/secrets.json
+*.pem
+# === Node.js ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# === React ===
+frontend/client/build/
+frontend/client/.env
+
+# === Environment Variables ===
+.env
+*.env.local
+*.env.development
+*.env.production
+
+# === Terraform ===
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+terraform.tfvars.json
+crash.log
+
+# === Docker ===
+Dockerfile
+docker-compose.override.yml
+*.log
+
+# === OS / IDEs ===
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# === AWS Keys or Secrets ===
+**/credentials
+**/secrets.json
+*.pem
