@@ -38,3 +38,4 @@ Thumbs.db
 **/credentials
 **/secrets.json
 *.pem
+node_modules/
