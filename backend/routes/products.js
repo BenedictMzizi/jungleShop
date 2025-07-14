@@ -1,21 +1,21 @@
-const express = require('express');
-const router = express.Router();
-const pool = require('../db'); // Assuming you're using a MySQL pool
-const { verifyAdminToken } = require('./auth'); // Middleware for admin protection
+import express from 'express';
+import { pool } from '../db/index.js';
+import verifyAdminToken from '../middleware/verifyAdminToken.js';
 
-// ✅ GET all products
+const router = express.Router();
+
 router.get('/', async (req, res) => {
   try {
-    const [products] = await pool.query('SELECT * FROM products');
-    res.json(products);
+    const [rows] = await pool.query('SELECT * FROM products');
+    res.json(rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// ✅ POST new product (admin only)
 router.post('/', verifyAdminToken, async (req, res) => {
   const { name, description, category, price, image } = req.body;
+
   try {
     const [result] = await pool.query(
       'INSERT INTO products (name, description, category, price, image) VALUES (?, ?, ?, ?, ?)',
@@ -27,7 +27,6 @@ router.post('/', verifyAdminToken, async (req, res) => {
   }
 });
 
-// ✅ PUT update product
 router.put('/:id', verifyAdminToken, async (req, res) => {
   const { id } = req.params;
   const { name, description, category, price, image } = req.body;
@@ -44,7 +43,6 @@ router.put('/:id', verifyAdminToken, async (req, res) => {
   }
 });
 
-// ✅ DELETE product
 router.delete('/:id', verifyAdminToken, async (req, res) => {
   const { id } = req.params;
   try {
@@ -56,4 +54,5 @@ router.delete('/:id', verifyAdminToken, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
+
