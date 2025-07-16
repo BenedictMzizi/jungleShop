@@ -9,7 +9,7 @@ export default function HomePage() {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    axios.get('/api/products').then(res => {
+    axios.get('http://13.61.48.159:4000/api/products').then(res => {
       setProducts(res.data);
       setFiltered(res.data);
     });
@@ -44,10 +44,19 @@ export default function HomePage() {
               key={product.id}
               className="border p-4 rounded shadow hover:shadow-lg bg-white"
             >
-              <img src={product.image} alt={product.name} className="w-full h-48 object-cover mb-2 rounded" />
+              <img
+                src={product.image_url}
+                alt={product.name}
+                className="w-full h-48 object-cover mb-2 rounded"
+              />
               <h2 className="text-lg font-bold">{product.name}</h2>
               <p className="text-sm text-gray-600">{product.category}</p>
-              <p className="font-semibold">${product.price / 100}</p>
+              <p className="font-semibold">
+                {new Intl.NumberFormat('en-ZA', {
+                  style: 'currency',
+                  currency: 'ZAR'
+                }).format(product.price)}
+              </p>
             </Link>
           ))}
         </div>

@@ -3,6 +3,7 @@ import multer from 'multer';
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
 import { pool } from '../db/index.js';
+import verifyAdminToken from '../middleware/verifyAdminToken.js';
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ const s3 = new AWS.S3({
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-router.post('/product', upload.single('image'), async (req, res) => {
+router.post('/product', verifyAdminToken, upload.single('image'), async (req, res) => {
   const { name, description, category, price } = req.body;
 
   if (!name || !description || !category || !price || !req.file) {
@@ -46,10 +47,8 @@ router.post('/product', upload.single('image'), async (req, res) => {
       imageUrl,
     });
   } catch (err) {
-    console.error('Upload or DB error:', err);
     res.status(500).json({ error: 'Upload or database insert failed' });
   }
 });
 
 export default router;
-

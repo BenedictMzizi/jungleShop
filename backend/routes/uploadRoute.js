@@ -3,6 +3,7 @@ import multer from 'multer';
 import multerS3 from 'multer-s3';
 import AWS from 'aws-sdk';
 import { pool } from '../db/index.js';
+import verifyAdminToken from '../middleware/verifyAdminToken.js';
 
 const router = express.Router();
 
@@ -16,19 +17,24 @@ const s3 = new AWS.S3();
 
 const upload = multer({
   storage: multerS3({
-    s3: s3,
+    s3,
     bucket: process.env.AWS_S3_BUCKET,
     acl: 'public-read',
     contentType: multerS3.AUTO_CONTENT_TYPE,
-    key: function (req, file, cb) {
-      const fileName = `products/${Date.now()}-${file.originalname}`;
-      cb(null, fileName);
+    key: (req, file, cb) => {
+      const filename = `products/${Date.now()}-${file.originalname.replace(/\s+/g, '-')}`;
+      cb(null, filename);
     },
   }),
 });
 
-router.post('/upload-product', upload.single('image'), async (req, res) => {
+router.post('/upload-product', verifyAdminToken, upload.single('image'), async (req, res) => {
   const { name, description, category, price } = req.body;
+
+  if (!req.file || !name || !price) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
   const imageUrl = req.file.location;
 
   try {
@@ -36,9 +42,9 @@ router.post('/upload-product', upload.single('image'), async (req, res) => {
       INSERT INTO products (name, description, category, price, image_url)
       VALUES (?, ?, ?, ?, ?)
     `;
-    await pool.query(query, [name, description, category, price, imageUrl]);
+    await pool.query(query, [name, description, category, parseFloat(price), imageUrl]);
 
-    res.json({
+    res.status(201).json({
       message: 'Product uploaded successfully',
       imageUrl,
     });
@@ -48,4 +54,3 @@ router.post('/upload-product', upload.single('image'), async (req, res) => {
 });
 
 export default router;
-

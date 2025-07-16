@@ -15,7 +15,7 @@ export default function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="*" element={<p className="text-center mt-20">Page not found</p>} />
+          <Route path="*" element={<p className="text-center mt-20 text-red-500">Page not found</p>} />
         </Routes>
       </Router>
     </CartProvider>
