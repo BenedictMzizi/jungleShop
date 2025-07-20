@@ -1,4 +1,3 @@
-// backend/app.js
 import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
@@ -34,7 +33,7 @@ AWS.config.update({
 });
 export const s3 = new AWS.S3();
 
-app.use('/api/products', verifyAdminToken, productRoutes);
+app.use('/api/products', productRoutes);
 app.use('/api/admin/upload', verifyAdminToken, uploadRoutes);
 app.use('/api/checkout', checkoutRoutes);
 app.use('/api/auth', authRoutes);
@@ -47,9 +46,12 @@ const __dirname = path.dirname(__filename);
 if (process.env.NODE_ENV === 'production') {
   const buildPath = path.join(__dirname, '../frontend/build');
   app.use(express.static(buildPath));
-
   app.get('*', (req, res) => {
     res.sendFile(path.join(buildPath, 'index.html'));
+  });
+} else {
+  app.get('/', (req, res) => {
+    res.send('🚀 JungleShop Backend running in development mode.');
   });
 }
 
