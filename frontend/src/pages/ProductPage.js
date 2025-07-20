@@ -12,26 +12,31 @@ export default function ProductPage() {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    setLoading(true);
-    setError(null);
+    const fetchProduct = async () => {
+      setLoading(true);
+      setError(null);
 
-    axios
-      .get('http://13.61.48.159:4000/api/products')
-      .then(res => {
-        const found = res.data.find(p => p.id.toString() === id);
+      try {
+        const API_URL = process.env.REACT_APP_API_URL;
+        console.log('Fetching product from:', `${API_URL}/api/products`);
+
+        const res = await axios.get(`${API_URL}/api/products`);
+        const found = res.data.find((p) => p.id.toString() === id);
+
         if (found) {
           setProduct(found);
         } else {
           setError('❌ Product not found.');
         }
-      })
-      .catch(err => {
+      } catch (err) {
         console.error('❌ API error:', err);
         setError('❌ Failed to load product. Please try again later.');
-      })
-      .finally(() => {
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchProduct();
   }, [id]);
 
   return (
@@ -52,6 +57,9 @@ export default function ProductPage() {
               src={product.image_url}
               alt={product.name}
               className="w-full h-64 object-cover rounded mb-4"
+              onError={(e) => {
+                e.target.src = '/placeholder.png';
+              }}
             />
             <h1 className="text-2xl font-bold mb-2">{product.name}</h1>
             <p className="text-gray-600 mb-2">Category: {product.category}</p>
