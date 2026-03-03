@@ -1,4 +1,3 @@
-# rds.tf
 resource "aws_security_group" "rds_sg" {
   name        = "rds-sg"
   description = "Allow MySQL access"
