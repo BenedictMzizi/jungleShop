@@ -8,7 +8,7 @@ const router = express.Router();
 
 const ADMIN_USER = {
   username: 'bennydrizi@gmail.com',
-  password: 'Admin123',
+  password: 'password',
   role: 'admin',
 };
 
