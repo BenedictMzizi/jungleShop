@@ -1,20 +1,16 @@
-# === Node.js ===
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# === React ===
 frontend/client/build/
 frontend/client/.env
 
-# === Environment Variables ===
 .env
 *.env.local
 *.env.development
 *.env.production
 
-# === Terraform ===
 .terraform/
 *.tfstate
 *.tfstate.*
@@ -22,19 +18,82 @@ terraform.tfvars
 terraform.tfvars.json
 crash.log
 
-# === Docker ===
 Dockerfile
 docker-compose.override.yml
 *.log
 
-# === OS / IDEs ===
 .DS_Store
 Thumbs.db
 *.swp
 .vscode/
 .idea/
 
-# === AWS Keys or Secrets ===
+**/credentials
+**/secrets.json
+*.pem
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+frontend/client/build/
+frontend/client/.env
+
+.env
+*.env.local
+*.env.development
+*.env.production
+
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+terraform.tfvars.json
+crash.log
+
+Dockerfile
+docker-compose.override.yml
+*.log
+
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+**/credentials
+**/secrets.json
+*.pem
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+frontend/client/build/
+frontend/client/.env
+
+.env
+*.env.local
+*.env.development
+*.env.production
+
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+terraform.tfvars.json
+crash.log
+
+Dockerfile
+docker-compose.override.yml
+*.log
+
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
 **/credentials
 **/secrets.json
 *.pem
@@ -44,17 +103,14 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# === React ===
 frontend/client/build/
 frontend/client/.env
 
-# === Environment Variables ===
 .env
 *.env.local
 *.env.development
 *.env.production
 
-# === Terraform ===
 .terraform/
 *.tfstate
 *.tfstate.*
@@ -62,99 +118,16 @@ terraform.tfvars
 terraform.tfvars.json
 crash.log
 
-# === Docker ===
 Dockerfile
 docker-compose.override.yml
 *.log
 
-# === OS / IDEs ===
 .DS_Store
 Thumbs.db
 *.swp
 .vscode/
 .idea/
 
-# === AWS Keys or Secrets ===
-**/credentials
-**/secrets.json
-*.pem
-# === Node.js ===
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# === React ===
-frontend/client/build/
-frontend/client/.env
-
-# === Environment Variables ===
-.env
-*.env.local
-*.env.development
-*.env.production
-
-# === Terraform ===
-.terraform/
-*.tfstate
-*.tfstate.*
-terraform.tfvars
-terraform.tfvars.json
-crash.log
-
-# === Docker ===
-Dockerfile
-docker-compose.override.yml
-*.log
-
-# === OS / IDEs ===
-.DS_Store
-Thumbs.db
-*.swp
-.vscode/
-.idea/
-
-# === AWS Keys or Secrets ===
-**/credentials
-**/secrets.json
-*.pem
-# === Node.js ===
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# === React ===
-frontend/client/build/
-frontend/client/.env
-
-# === Environment Variables ===
-.env
-*.env.local
-*.env.development
-*.env.production
-
-# === Terraform ===
-.terraform/
-*.tfstate
-*.tfstate.*
-terraform.tfvars
-terraform.tfvars.json
-crash.log
-
-# === Docker ===
-Dockerfile
-docker-compose.override.yml
-*.log
-
-# === OS / IDEs ===
-.DS_Store
-Thumbs.db
-*.swp
-.vscode/
-.idea/
-
-# === AWS Keys or Secrets ===
 **/credentials
 **/secrets.json
 *.pem
