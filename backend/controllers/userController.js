@@ -1,3 +1,3 @@
 export const getUser = (req, res) => {
-  res.json({ id: 1, name: "John Doe", email: "test@example.com" });
+  res.json({ id: 1, name: "Mzi 26", email: "test@example.com" });
 };
