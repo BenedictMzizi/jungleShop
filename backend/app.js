@@ -1,4 +1,3 @@
-// backend/app.js
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -13,10 +12,9 @@ app.use(cors());
 app.use(express.json());
 app.use(fileUpload());
 
-// Stripe setup
+
 const stripe = new Stripe(process.env.STRIPE_KEY);
 
-// AWS S3 setup
 AWS.config.update({
   accessKeyId: process.env.AWS_KEY,
   secretAccessKey: process.env.AWS_SECRET,
@@ -24,25 +22,25 @@ AWS.config.update({
 });
 const s3 = new AWS.S3();
 
-// MySQL DB connection pool
 const pool = mysql.createPool({
-  uri: process.env.DB_URI,
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT || 3306),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
 });
 
-// 🧑 Admin Auth Middleware
 const adminAuth = (req, res, next) => {
   const { email, password } = req.headers;
   if (email === 'bennydrizi@gmail.com' && password === 'Admin123') return next();
   return res.status(401).json({ error: 'Unauthorized' });
 };
 
-// 🌐 Routes
-app.get('/', (req, res) => res.send('jungleShop API running ✅'));
+app.get('/', (req, res) => res.send('jungleShop API running '));
 
-// 🖼 Upload product image (Admin only)
 app.post('/api/upload', adminAuth, async (req, res) => {
   if (!req.files?.image) return res.status(400).send('No file uploaded.');
   const file = req.files.image;
@@ -62,13 +60,16 @@ app.post('/api/upload', adminAuth, async (req, res) => {
   }
 });
 
-// 📦 Get products
 app.get('/api/products', async (req, res) => {
-  const [rows] = await pool.query('SELECT * FROM products ORDER BY id DESC');
-  res.json(rows);
+  try {
+    const [rows] = await pool.query('SELECT * FROM products ORDER BY id DESC');
+    res.json(rows);
+  } catch (err) {
+    console.error('PRODUCTS ERROR:', err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
-// ➕ Add product (Admin only)
 app.post('/api/products', adminAuth, async (req, res) => {
   const { name, description, category, price, image } = req.body;
   const [result] = await pool.query(
@@ -78,7 +79,6 @@ app.post('/api/products', adminAuth, async (req, res) => {
   res.json({ id: result.insertId });
 });
 
-// 💳 Stripe Checkout
 app.post('/api/checkout', async (req, res) => {
   const { items, email } = req.body;
   const line_items = items.map((item) => ({
@@ -111,4 +111,14 @@ app.post('/api/checkout', async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log('🌍 Backend live at http://localhost:3000'));
+(async () => {
+  try {
+    const conn = await pool.getConnection();
+    console.log(' DB connected');
+    conn.release();
+  } catch (err) {
+    console.error(' DB connection failed:', err);
+  }
+})();
+
+app.listen(3000, () => console.log(' Backend live at http://localhost:3000'));

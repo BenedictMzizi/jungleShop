@@ -1,59 +1,72 @@
-const express = require('express');
-const router = express.Router();
-const pool = require('../db'); // Assuming you're using a MySQL pool
-const { verifyAdminToken } = require('./auth'); // Middleware for admin protection
+import express from 'express';
+import { pool } from '../db/index.js';
+import verifyAdminToken from '../middleware/verifyAdminToken.js';
 
-// ✅ GET all products
+const router = express.Router();
+
 router.get('/', async (req, res) => {
   try {
-    const [products] = await pool.query('SELECT * FROM products');
-    res.json(products);
+    const [rows] = await pool.query('SELECT * FROM products');
+    res.json(rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// ✅ POST new product (admin only)
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [rows] = await pool.query('SELECT * FROM products WHERE id = ?', [id]);
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 router.post('/', verifyAdminToken, async (req, res) => {
-  const { name, description, category, price, image } = req.body;
+  const { name, description, category, price, image_url } = req.body;
   try {
     const [result] = await pool.query(
-      'INSERT INTO products (name, description, category, price, image) VALUES (?, ?, ?, ?, ?)',
-      [name, description, category, price, image]
+      'INSERT INTO products (name, description, category, price, image_url) VALUES (?, ?, ?, ?, ?)',
+      [name, description, category, price, image_url]
     );
-    res.status(201).json({ id: result.insertId, name, description, category, price, image });
+    res.status(201).json({ id: result.insertId, name, description, category, price, image_url });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// ✅ PUT update product
 router.put('/:id', verifyAdminToken, async (req, res) => {
   const { id } = req.params;
-  const { name, description, category, price, image } = req.body;
-
+  const { name, description, category, price, image_url } = req.body;
   try {
     const [result] = await pool.query(
-      'UPDATE products SET name = ?, description = ?, category = ?, price = ?, image = ? WHERE id = ?',
-      [name, description, category, price, image, id]
+      'UPDATE products SET name = ?, description = ?, category = ?, price = ?, image_url = ? WHERE id = ?',
+      [name, description, category, price, image_url, id]
     );
-    if (result.affectedRows === 0) return res.status(404).json({ message: 'Product not found' });
-    res.json({ id, name, description, category, price, image });
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.json({ id, name, description, category, price, image_url });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// ✅ DELETE product
 router.delete('/:id', verifyAdminToken, async (req, res) => {
   const { id } = req.params;
   try {
     const [result] = await pool.query('DELETE FROM products WHERE id = ?', [id]);
-    if (result.affectedRows === 0) return res.status(404).json({ message: 'Product not found' });
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
     res.status(204).send();
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-module.exports = router;
+export default router;
