@@ -232,7 +232,8 @@ POST /api/checkout
 Creates Stripe Checkout Session and stores successful orders.
 
 Screenshots
-Home Page
+<img width="1340" height="677" alt="jungleshop" src="https://github.com/user-attachments/assets/4f578d2d-3b22-477d-b5c9-caff86313b2f" />
+
 
 
 Live Demo
@@ -289,4 +290,7 @@ GitHub
 https://github.com/BenedictMzizi
 
 LinkedIn
-https://www.linkedin.com/in/benedict-mzizi<img width="1340" height="677" alt="jungleshop" src="https://github.com/user-attachments/assets/36d9ab7f-bc22-4847-9a6e-eeffa204bbae" />
+https://www.linkedin.com/in/benedict-mzizi
+
+
+
